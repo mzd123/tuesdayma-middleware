@@ -20,9 +20,9 @@ public class BitMapService {
     /**
      * 赋值第几位
      *
-     * @param key
-     * @param offset
-     * @param value
+     * @param key    key
+     * @param offset 第几位
+     * @param value  值
      */
     public void bitSet(String key, long offset, boolean value) {
         stringRedisTemplate.opsForValue().setBit(key, offset, value);
@@ -31,8 +31,8 @@ public class BitMapService {
     /**
      * 获取第几位
      *
-     * @param key
-     * @param offset
+     * @param key    key
+     * @param offset 第几位
      * @return
      */
     public Boolean bitGet(String key, long offset) {
@@ -41,18 +41,23 @@ public class BitMapService {
 
     /**
      * 有多少个1
+     * 下标从0开始  -1表示到结束
      *
-     * @param key
-     * @param start
-     * @param end
+     * @param key   key
+     * @param start 开始下标
+     * @param end   结束下标
      * @return
      */
-    public long bitCount(String key, int start, int end) {
+    public long bitCount(String key, Integer start, Integer end) {
+        if (start == null || end == null) {
+            return stringRedisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes(), 0, -1));
+        }
         return stringRedisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes(), start, end));
     }
 
     /**
      * 并且
+     * 将key1和key2的值进行且操作，然后将值赋值给result这个key
      *
      * @param result
      * @param key1
@@ -65,6 +70,7 @@ public class BitMapService {
 
     /**
      * 或
+     * 将key1和key2的值进行或操作，然后将值赋值给result这个key
      *
      * @param result
      * @param key1
@@ -77,6 +83,7 @@ public class BitMapService {
 
     /**
      * 异或
+     * 将key1和key2的值进行异或操作，然后将值赋值给result这个key
      * 相同则0 不同则1
      *
      * @param result

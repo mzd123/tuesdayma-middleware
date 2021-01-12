@@ -42,6 +42,12 @@
             <version>2.1.5.RELEASE</version>
         </dependency>
 
+        <!--使用 lettuce 连接池是，必须要依赖这个包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -54,6 +60,12 @@
             <version>1.18.10</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
 
     </dependencies>
 
