@@ -68,6 +68,11 @@ public class ListTest {
     }
 
     @Test
+    public void set() {
+        listService.set("javaList1", 10L, "7777");
+    }
+
+    @Test
     public void leftPop() {
         log.info(listService.leftPop("javaList"));
     }
@@ -87,4 +92,8 @@ public class ListTest {
         log.info(String.valueOf(listService.remove("javaList", 0, "222")));
     }
 
+    @Test
+    public void rightPopAndLeftPush() {
+        listService.rightPopAndLeftPush("javaList", "javaRightPush2", null);
+    }
 }

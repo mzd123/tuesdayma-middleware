@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: mzd
@@ -63,6 +64,18 @@ public class ListService {
     }
 
     /**
+     * 将key中第index个值设置为value，key必须要存在，不然会报错
+     * index 不能超过list的长度-1，不然会报错
+     *
+     * @param key
+     * @param index
+     * @param value
+     */
+    public void set(String key, long index, String value) {
+        stringRedisTemplate.opsForList().set(key, index, value);
+    }
+
+    /**
      * 返回最后一个进栈的
      * 无论是左入栈左出栈，还是右入栈右出栈，都是后进先出
      *
@@ -75,6 +88,7 @@ public class ListService {
 
     /**
      * 获取key这个list中第几个元素，下标从0开始
+     * 如果index传入的是符数，则从右往左数，下标从-1开始
      *
      * @param key
      * @param index
@@ -110,6 +124,25 @@ public class ListService {
      */
     public long remove(String key, long count, String value) {
         return stringRedisTemplate.opsForList().remove(key, count, value);
+    }
+
+    /**
+     * key1右出栈一个value，再将这个value左进栈到key2中
+     * 如果key1不存在则，什么事情都不会发生，key2也不会多一个值
+     * 如果key2不存在，key1存在，则key1会右出栈一个value，并且会新建一个key2
+     * 应用场景：
+     * 安全的队列：key1为等待处理的事件队列，key2为处理中的事件队列，当事件处理完之后，再删除key2中的值
+     *
+     * @param key1
+     * @param key2
+     * @param timeout
+     */
+    public void rightPopAndLeftPush(String key1, String key2, Long timeout) {
+        if (timeout == null) {
+            stringRedisTemplate.opsForList().rightPopAndLeftPush(key1, key2);
+        } else {
+            stringRedisTemplate.opsForList().rightPopAndLeftPush(key1, key2, timeout, TimeUnit.SECONDS);
+        }
     }
 
 }
