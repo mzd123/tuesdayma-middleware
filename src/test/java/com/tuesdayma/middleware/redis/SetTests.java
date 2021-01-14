@@ -48,7 +48,7 @@ public class SetTests {
 
     @Test
     public void remove() {
-        log.info(JSON.toJSONString(setService.remove("javaSet4","1111")));
+        log.info(JSON.toJSONString(setService.remove("javaSet4", "1111")));
     }
 
     @Test
@@ -65,7 +65,38 @@ public class SetTests {
     }
 
     @Test
+    public void unionAndStore() {
+        List<String> keys = new ArrayList<>();
+        keys.add("javaSet1");
+        log.info(String.valueOf(setService.unionAndStore("javaSet1111", keys, "javaSetUnionAndStore")));
+    }
+
+    @Test
     public void isMember() {
         log.info(String.valueOf(setService.isMember("javaSet6", "112")));
+    }
+
+    @Test
+    public void distinctRandomMembers() {
+        log.info(JSON.toJSONString(setService.distinctRandomMembers("javaSet1", -1)));
+//        log.info(JSON.toJSONString(setService.distinctRandomMembers("javaSet1", 2)));
+//        log.info(JSON.toJSONString(setService.distinctRandomMembers("javaSet1", 2)));
+//        log.info(JSON.toJSONString(setService.distinctRandomMembers("javaSet1", 2)));
+//        log.info(JSON.toJSONString(setService.distinctRandomMembers("javaSet1", 2)));
+    }
+
+    @Test
+    public void pop() {
+        log.info(JSON.toJSONString(setService.pop("javaSet1", 1L)));
+    }
+
+    @Test
+    public void randomMembers() {
+        log.info(JSON.toJSONString(setService.randomMembers("javaSet1", 1L)));
+    }
+
+    @Test
+    public void move() {
+        log.info(JSON.toJSONString(setService.move("javaSet1", "啊的司法大厦11", "javaSet21")));
     }
 }
