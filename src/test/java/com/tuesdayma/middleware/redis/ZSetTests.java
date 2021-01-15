@@ -89,4 +89,16 @@ public class ZSetTests {
     public void rank() {
         log.info(String.valueOf(zSetService.rank("javaZSet1", "aefadsfdsafsfadsfadsfsa")));
     }
+
+
+    @Test
+    public void score() {
+        log.info(String.valueOf(zSetService.score("javaZSet1", "阿斯顿发大水发大水发大水范德萨国防大厦")));
+    }
+
+
+    @Test
+    public void zCard() {
+        log.info(String.valueOf(zSetService.zCard("javaZSet11")));
+    }
 }

@@ -69,6 +69,17 @@ public class ZSetService {
     }
 
     /**
+     * 获取key中元素的个数
+     * 如果key不存在，则返回0
+     *
+     * @param key
+     * @return
+     */
+    public Long zCard(String key) {
+        return stringRedisTemplate.opsForZSet().zCard(key);
+    }
+
+    /**
      * 获取【下标】范围内的元素集合，下标从0开始
      * start和end不能为负数
      *
@@ -141,6 +152,17 @@ public class ZSetService {
         return stringRedisTemplate.opsForZSet().rank(key, value);
     }
 
+    /**
+     * 返回value在key中的分数
+     * 如果value不在key中则返回null
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public Double score(String key, String value) {
+        return stringRedisTemplate.opsForZSet().score(key, value);
+    }
 
     /**
      * todo 这个东西搞不清楚 range的大于，小于这些是在和谁在比
