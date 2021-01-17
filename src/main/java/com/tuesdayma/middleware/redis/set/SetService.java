@@ -108,6 +108,7 @@ public class SetService {
     /**
      * 查看value是不是key中的元素，如果是则返回true，如果不是则返回false
      * 如果key本身就是不存在的，则直接返回false
+     * 类同与hash数据结构中的hasKey
      *
      * @param key
      * @param value
