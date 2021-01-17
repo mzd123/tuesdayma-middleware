@@ -7,4 +7,4 @@
    1. list、set、zset、hash数据类型的基本操作
    2. scan 对 key、list、set、zset、hash的基本操作
    3. bitmap 的基本操作
-
+   4. redis发布订阅模式
