@@ -1,7 +1,7 @@
 spring:
   redis:
-    host: 127.0.0.1
-#    host: 192.168.1.37
+#    host: 127.0.0.1
+    host: 192.168.1.37
     lettuce:
       pool:
         max-active: 1

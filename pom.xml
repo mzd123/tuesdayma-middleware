@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <elasticsearch.version>7.4.2</elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -37,18 +38,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>2.1.5.RELEASE</version>
-        </dependency>
-
-        <!--使用 lettuce 连接池是，必须要依赖这个包-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.67</version>
@@ -66,6 +55,27 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
+
+        <!--##########################redis开始#################################-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.1.5.RELEASE</version>
+        </dependency>
+        <!--使用 lettuce 连接池是，必须要依赖这个包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <!--##########################redis结束#################################-->
+
+        <!--##########################elastic开始#################################-->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <!--##########################elastic结束#################################-->
 
     </dependencies>
 
