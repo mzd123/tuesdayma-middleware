@@ -89,7 +89,13 @@ public class RestHighLevelService {
         }
     }
 
-
+    /**
+     * 批量插入es
+     *
+     * @param indexName
+     * @param map
+     * @return
+     */
     public String insertBulk(String indexName, Map<String, Object> map) {
         try {
             BulkRequest bulkRequest = new BulkRequest();
