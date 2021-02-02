@@ -4,16 +4,16 @@ import com.tuesdayma.middleware.elasticsearch.bean.Friend;
 import com.tuesdayma.middleware.elasticsearch.bean.Person;
 import com.tuesdayma.middleware.elasticsearch.client.RestHighLevelService;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: mzd
@@ -86,40 +86,42 @@ public class RestHighLevelTests {
 
     @Test
     public void insertBulk() {
-        Person person1 = new Person();
-        person1.setAddr("测试地址");
-        person1.setAge(21);
-        person1.setName("小百");
-        List<Friend> list1 = new ArrayList<>();
-        Friend friend2 = new Friend();
-        friend2.setName("dsfjsdlfjas");
-        friend2.setAge(1);
-        list1.add(friend2);
-        Friend friend3 = new Friend();
-        friend3.setName("sdfnjldskflsk");
-        friend3.setAge(2);
-        list1.add(friend3);
-        person1.setFriends(list1);
-
-        Person person = new Person();
-        person.setAddr("测试地址");
-        person.setAge(19);
-        person.setName("小黄");
-        List<Friend> list = new ArrayList<>();
-        Friend friend = new Friend();
-        friend.setName("电风扇");
-        friend.setAge(1);
-        list.add(friend);
-        Friend friend1 = new Friend();
-        friend1.setName("fdsfjl");
-        friend1.setAge(2);
-        list.add(friend1);
-        person.setFriends(list);
-
-        Map<String,Object> map=new HashMap<>();
-        map.put("456",person);
-        map.put("789",person1);
-
-        log.info(restHighLevelService.insertBulk( "person", map));
+        Map<String, Object> map = new HashMap<>();
+        for (int i = 0; i < 10000; i++) {
+            Person person = new Person();
+            person.setAddr(getString(5));
+            person.setAge((int) (Math.random() * 80));
+            person.setName(getString(2));
+            List<Friend> list = new ArrayList<>();
+            Friend friend = new Friend();
+            friend.setName(getString(2));
+            friend.setAge((int) (Math.random() * 80));
+            list.add(friend);
+            Friend friend1 = new Friend();
+            friend1.setName(getString(2));
+            friend1.setAge((int) (Math.random() * 80));
+            list.add(friend1);
+            person.setFriends(list);
+            map.put(UUID.randomUUID().toString().replaceAll("-",""), person);
+        }
+        log.info(restHighLevelService.insertBulk("person", map));
     }
+    public String getString(int count) {
+        String result = "";
+        for (int i = 0; i < count; i++) {
+            result += (char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1)));
+        }
+        return result;
+    }
+
+
+
+    @Test
+    public void search() {
+        BoolQueryBuilder boolQueryBuilder=new BoolQueryBuilder();
+        boolQueryBuilder.must(new MatchQueryBuilder("name","职贬"));
+        log.info(restHighLevelService.search("person",boolQueryBuilder));
+    }
+
+
 }

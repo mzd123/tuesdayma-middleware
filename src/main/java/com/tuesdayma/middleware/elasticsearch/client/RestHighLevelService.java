@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.tuesdayma.middleware.elasticsearch.bean.Friend;
 import com.tuesdayma.middleware.elasticsearch.bean.Person;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.queryparser.xml.builders.BooleanQueryBuilder;
 import org.elasticsearch.action.admin.indices.template.put.PutIndexTemplateRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -16,6 +19,10 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -109,6 +116,28 @@ public class RestHighLevelService {
             return JSON.toJSONString(bulkItemResponses);
         } catch (IOException e) {
             log.error("向es中批量插入数据失败：", e);
+            return null;
+        }
+    }
+
+    /**
+     * 搜索
+     *
+     * @param indexName
+     * @param boolQueryBuilder
+     * @return
+     */
+    public String search(String indexName, BoolQueryBuilder boolQueryBuilder) {
+        try {
+            SearchRequest request = new SearchRequest();
+            request.indices(indexName);
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            searchSourceBuilder.query(boolQueryBuilder);
+            request.source(searchSourceBuilder);
+            SearchResponse searchResponse= restHighLevelClient.search(request, RequestOptions.DEFAULT);
+            return JSON.toJSONString(searchResponse);
+        } catch (Exception e) {
+            log.error("查询es失败：", e);
             return null;
         }
     }
