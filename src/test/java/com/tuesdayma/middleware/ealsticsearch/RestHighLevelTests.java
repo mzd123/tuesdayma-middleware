@@ -56,12 +56,17 @@ public class RestHighLevelTests {
                 "\n" +
                 "\t}\n" +
                 "}";
-        restHighLevelService.initIndex("person", mapping);
+        restHighLevelService.initIndex("person2", mapping);
     }
 
     @Test
     public void existsIndex() {
         log.info(String.valueOf(restHighLevelService.existsIndex("test_index1")));
+    }
+
+    @Test
+    public void deleteIndex() {
+        log.info(String.valueOf(restHighLevelService.deleteIndex("person2")));
     }
 
     @Test
@@ -83,7 +88,10 @@ public class RestHighLevelTests {
         log.info(restHighLevelService.insert("111", "person", person));
     }
 
-
+    @Test
+    public void delete() {
+        log.info(String.valueOf(restHighLevelService.delete("person","dbd487899b1d4d9685839e2a4100d6d1")));
+    }
     @Test
     public void insertBulk() {
         Map<String, Object> map = new HashMap<>();

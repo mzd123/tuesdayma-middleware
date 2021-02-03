@@ -8,3 +8,9 @@
    2. scan 对 key、list、set、zset、hash的基本操作
    3. bitmap 的基本操作
    4. redis发布订阅模式
+## elasticsearch
+版本：elasticsearch 7.4.2
+
+包含内容：
+   1. 判断索引是否存在、创建索引、删除索引
+   2. 向索引插入数据、删除数据、更新数据、查询数据

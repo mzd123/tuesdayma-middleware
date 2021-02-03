@@ -5,9 +5,11 @@ import com.tuesdayma.middleware.elasticsearch.bean.Friend;
 import com.tuesdayma.middleware.elasticsearch.bean.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.queryparser.xml.builders.BooleanQueryBuilder;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.template.put.PutIndexTemplateRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -42,6 +44,7 @@ public class RestHighLevelService {
 
     /**
      * 初始化索引
+     * 如果索引indexName已存在，则会报错
      *
      * @param indexName 索引名称  名称不能有大写，不然会报错
      * @param mapping   索引结构  传入的mapping必须是JSON 格式的
@@ -70,6 +73,24 @@ public class RestHighLevelService {
             return restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             log.error("判断es索引是否存在失败：", e);
+        }
+        return false;
+    }
+
+    /**
+     * 删除索引
+     * indexName这个索引必须存在不然就会报错
+     *
+     * @param indexName
+     * @return
+     */
+    public boolean deleteIndex(String indexName) {
+        try {
+            DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
+            restHighLevelClient.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
+            return true;
+        } catch (IOException e) {
+            log.error("删除索引失败：", e);
         }
         return false;
     }
@@ -121,6 +142,26 @@ public class RestHighLevelService {
     }
 
     /**
+     * 删除es中指定id的数据,该删除为物理删除
+     *
+     * @param indexName
+     * @param id
+     * @return
+     */
+    public boolean delete(String indexName, String id) {
+        try {
+            DeleteRequest deleteRequest = new DeleteRequest();
+            deleteRequest.index(indexName);
+            deleteRequest.id(id);
+            restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            log.error("删除es中的数据失败：", e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 搜索
      *
      * @param indexName
@@ -134,7 +175,7 @@ public class RestHighLevelService {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.query(boolQueryBuilder);
             request.source(searchSourceBuilder);
-            SearchResponse searchResponse= restHighLevelClient.search(request, RequestOptions.DEFAULT);
+            SearchResponse searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
             return JSON.toJSONString(searchResponse);
         } catch (Exception e) {
             log.error("查询es失败：", e);
