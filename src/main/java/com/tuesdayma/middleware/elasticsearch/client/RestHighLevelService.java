@@ -24,11 +24,13 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -154,8 +156,89 @@ public class RestHighLevelService {
             deleteRequest.index(indexName);
             deleteRequest.id(id);
             restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
+            // 无论是update还是delete，es都有1s的延迟时间，只能说是准实时
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            SearchRequest request = new SearchRequest();
+//            request.indices(indexName);
+//            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//            BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+//            boolQueryBuilder.must(new TermQueryBuilder("_id", id));
+//            searchSourceBuilder.query(boolQueryBuilder);
+//            request.source(searchSourceBuilder);
+//            SearchResponse searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+//            log.info("查询结果为：{}" , JSON.toJSONString(searchResponse));
         } catch (IOException e) {
             log.error("删除es中的数据失败：", e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 更新指定id的数据
+     *
+     * @param indexName
+     * @param id
+     * @param hashMap
+     * @return
+     */
+    public boolean updateById(String indexName, String id, HashMap<String, Object> hashMap) {
+        try {
+            UpdateRequest updateRequest = new UpdateRequest();
+            updateRequest.index(indexName);
+            updateRequest.id(id);
+            updateRequest.doc(hashMap);
+            restHighLevelClient.update(updateRequest, RequestOptions.DEFAULT);
+            // 无论是update还是delete，es都有1s的延迟时间，只能说是准实时
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            SearchRequest request = new SearchRequest();
+//            request.indices(indexName);
+//            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//            BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+//            boolQueryBuilder.must(new TermQueryBuilder("_id", id));
+//            searchSourceBuilder.query(boolQueryBuilder);
+//            request.source(searchSourceBuilder);
+//            SearchResponse searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+//            log.info("查询结果为：{}", JSON.toJSONString(searchResponse));
+        } catch (IOException e) {
+            log.error("修改es中的数据失败：", e);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateByQuery(String indexName, BoolQueryBuilder boolQueryBuilder, HashMap<String, Object> hashMap) {
+        try {
+            UpdateByQueryRequest updateByQueryRequest = new UpdateByQueryRequest();
+            updateByQueryRequest.setQuery(boolQueryBuilder);
+            updateByQueryRequest.indices(indexName);
+           // updateByQueryRequest.
+            restHighLevelClient.updateByQuery(updateByQueryRequest, RequestOptions.DEFAULT);
+            // 无论是update还是delete，es都有1s的延迟时间，只能说是准实时
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            SearchRequest request = new SearchRequest();
+//            request.indices(indexName);
+//            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//            BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+//            boolQueryBuilder.must(new TermQueryBuilder("_id", id));
+//            searchSourceBuilder.query(boolQueryBuilder);
+//            request.source(searchSourceBuilder);
+//            SearchResponse searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+//            log.info("查询结果为：{}", JSON.toJSONString(searchResponse));
+        } catch (IOException e) {
+            log.error("修改es中的数据失败：", e);
             return false;
         }
         return true;

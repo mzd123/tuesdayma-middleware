@@ -90,8 +90,18 @@ public class RestHighLevelTests {
 
     @Test
     public void delete() {
-        log.info(String.valueOf(restHighLevelService.delete("person","dbd487899b1d4d9685839e2a4100d6d1")));
+        log.info(String.valueOf(restHighLevelService.delete("person", "c8d9e6f816f3466e8a5c7a6fdd0e4ced")));
     }
+
+    @Test
+    public void update() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("addr", "贝达梦工厂");
+        hashMap.put("age", "22");
+        hashMap.put("name", "小明");
+        log.info(String.valueOf(restHighLevelService.updateById("person", "fffd08de3b484dd9a88077bb04778c02", hashMap)));
+    }
+
     @Test
     public void insertBulk() {
         Map<String, Object> map = new HashMap<>();
@@ -110,10 +120,11 @@ public class RestHighLevelTests {
             friend1.setAge((int) (Math.random() * 80));
             list.add(friend1);
             person.setFriends(list);
-            map.put(UUID.randomUUID().toString().replaceAll("-",""), person);
+            map.put(UUID.randomUUID().toString().replaceAll("-", ""), person);
         }
         log.info(restHighLevelService.insertBulk("person", map));
     }
+
     public String getString(int count) {
         String result = "";
         for (int i = 0; i < count; i++) {
@@ -123,12 +134,11 @@ public class RestHighLevelTests {
     }
 
 
-
     @Test
     public void search() {
-        BoolQueryBuilder boolQueryBuilder=new BoolQueryBuilder();
-        boolQueryBuilder.must(new MatchQueryBuilder("name","职贬"));
-        log.info(restHighLevelService.search("person",boolQueryBuilder));
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+        boolQueryBuilder.must(new MatchQueryBuilder("name", "职贬"));
+        log.info(restHighLevelService.search("person", boolQueryBuilder));
     }
 
 
