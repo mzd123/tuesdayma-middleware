@@ -8,6 +8,7 @@
    2. scan 对 key、list、set、zset、hash的基本操作
    3. bitmap 的基本操作
    4. redis发布订阅模式
+   5. 基于redis+threadPoolExecutor实现延迟队列,redis持久化延迟任务，threadPoolExecutor线程池来调度任务
 ## elasticsearch
 版本：elasticsearch 7.4.2
 
