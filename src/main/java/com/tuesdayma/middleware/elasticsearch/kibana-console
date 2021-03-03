@@ -1,0 +1,234 @@
+#################删除索引#################
+DELETE test_index
+#################创建索引#################
+# 对超过ignore_above的字符串，analyzer不会进行处理
+PUT test_index
+{
+	"mappings": {
+		"properties": {
+			"name": {
+				"type": "text",
+				"fields": {
+					"keyword": {
+						"type": "keyword",
+						"ignore_above": 256
+					}
+				}
+			},
+			"age":{
+			  "type": "integer"
+			},
+			"address":{
+			  "type": "text"
+			}
+		}
+	}
+}
+#################索取索引信息#################
+GET test_index
+#################创建文档#################
+POST test_index/_doc/1
+{
+  "name":"马周狄",
+  "age":20,
+  "address":"杭州市合景瑜翠园"
+}
+POST test_index/_doc/2
+{
+  "name":"马狄",
+  "age":22,
+  "address":"杭州市合西瑜翠园"
+}
+POST test_index/_doc/3
+{
+  "name":"马周",
+  "age":23,
+  "address":"杭州镇合景瑜翠园"
+}
+POST test_index/_doc/4
+{
+  "name":"周狄",
+  "age":24,
+  "address":"杭州瑜翠园"
+}
+POST test_index/_doc/5
+{
+  "name":"余",
+  "address":"杭州瑜余翠园123"
+}
+POST test_index/_doc/6
+{
+  "name":"余杭",
+  "address":"杭州瑜翠园123"
+}
+#################查询#################
+# 查询所有
+GET test_index/_search
+{}
+# 简单查询
+GET test_index/_search
+{
+  "query": {
+    "match": {
+      "address": "杭州镇合景瑜翠园"
+    }
+  }
+}
+GET test_index/_search
+{
+  "query": {
+    "term": {
+      "address.keyword": {
+        "value": "杭州镇合景瑜翠园"
+      }
+    }
+  }
+}
+# 感觉terms效果像should
+GET test_index/_search
+{
+  "query": {
+    "terms": {
+      "address.keyword": [
+        "杭州镇合景瑜翠园",
+        "杭州市合西瑜翠园"
+      ]
+    }
+  }
+}
+# 查询age字段有值的数据
+GET test_index/_search
+{
+  "query": {
+    "exists": {
+      "field": "age"
+    }
+  }
+}
+GET test_index/_search
+{
+  "query": {
+    "ids": {"values": ["1","2"]}
+  }
+}
+# 前缀查询
+GET test_index/_search
+{
+  "query": {
+    "prefix": {
+      "name.keyword": {
+        "value": "马周"
+      }
+    }
+  }
+}
+# 通配符搜索 其中 * 表示任意字符（可以有多个） ?只能表示一个字符
+GET test_index/_search
+{
+  "query": {
+    "wildcard": {
+      "address.keyword": {
+        "value": "杭州市*瑜翠园"
+      }
+    }
+  }
+}
+# 权重查询  boost 越大 表示匹配之后得分将越高
+GET test_index/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "name": {
+              "query": "周狄",
+              "boost": 8
+            }
+          }
+        },
+        {
+          "match": {
+            "age": {
+              "query": "22",
+              "boost": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+# operator的and or 查询
+GET test_index/_search
+{
+  "query": {
+   "match": {
+     "address": {
+       "query": "杭州市 瑜翠园",
+       "operator": "or"
+     }
+   }
+  }
+}
+# dis_max查询,如果不使用dis_max的话，5将排在6前面，但是6明明是余杭精准匹配的，却被排在了后面，显然不是想要的结果
+GET test_index/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "name": "余杭"
+          }
+        },
+        {
+          "match": {
+            "address": "余杭"
+          }
+        }
+      ]
+    }
+  }
+}
+GET test_index/_search
+{
+  "query": {
+    "dis_max": {
+      "queries": [
+        {
+          "match": {
+            "name": "余杭"
+          }
+        },
+        {
+          "match": {
+            "address": "余杭"
+          }
+        }
+      ]
+    }
+  },
+  "from": 0,
+  "size": 2
+}
+# 设置匹配度
+GET test_index/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "周狄",
+        "minimum_should_match":"100%"
+      }
+    }
+  }
+}
+#################查看mapping信息#################
+GET test_index/_mapping
+#################查看分词效果#################
+POST _analyze
+{
+  "analyzer": "ik_smart",
+  "text": "余杭"
+}

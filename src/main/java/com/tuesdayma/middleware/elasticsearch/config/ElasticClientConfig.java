@@ -13,9 +13,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ElasticClientConfig {
 
+//    @Bean("restHighLevelClient")
+//    public RestHighLevelClient getRestHighLevelClient() {
+//        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("127.0.0.1", 9200)));
+//        return restHighLevelClient;
+//    }
     @Bean("restHighLevelClient")
     public RestHighLevelClient getRestHighLevelClient() {
-        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("127.0.0.1", 9200)));
+        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.1.122", 9201),
+                new HttpHost("192.168.1.122", 9202), new HttpHost("192.168.1.122", 9203)));
         return restHighLevelClient;
     }
 }

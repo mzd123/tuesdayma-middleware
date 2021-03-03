@@ -10,7 +10,7 @@
    4. redis发布订阅模式
    5. 基于redis+threadPoolExecutor实现延迟队列,redis持久化延迟任务，threadPoolExecutor线程池来调度任务
 ## elasticsearch
-版本：elasticsearch 7.4.2
+版本：elasticsearch 7.4.2(支持集群)
 
 包含内容：
    1. 判断索引是否存在、创建索引、删除索引

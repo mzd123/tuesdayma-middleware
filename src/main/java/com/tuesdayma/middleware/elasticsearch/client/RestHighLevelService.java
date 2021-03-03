@@ -215,35 +215,6 @@ public class RestHighLevelService {
         return true;
     }
 
-    public boolean updateByQuery(String indexName, BoolQueryBuilder boolQueryBuilder, HashMap<String, Object> hashMap) {
-        try {
-            UpdateByQueryRequest updateByQueryRequest = new UpdateByQueryRequest();
-            updateByQueryRequest.setQuery(boolQueryBuilder);
-            updateByQueryRequest.indices(indexName);
-           // updateByQueryRequest.
-            restHighLevelClient.updateByQuery(updateByQueryRequest, RequestOptions.DEFAULT);
-            // 无论是update还是delete，es都有1s的延迟时间，只能说是准实时
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            SearchRequest request = new SearchRequest();
-//            request.indices(indexName);
-//            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//            BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
-//            boolQueryBuilder.must(new TermQueryBuilder("_id", id));
-//            searchSourceBuilder.query(boolQueryBuilder);
-//            request.source(searchSourceBuilder);
-//            SearchResponse searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
-//            log.info("查询结果为：{}", JSON.toJSONString(searchResponse));
-        } catch (IOException e) {
-            log.error("修改es中的数据失败：", e);
-            return false;
-        }
-        return true;
-    }
-
     /**
      * 搜索
      *
