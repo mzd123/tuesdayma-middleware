@@ -76,7 +76,15 @@
             <version>${elasticsearch.version}</version>
         </dependency>
         <!--##########################elastic结束#################################-->
-
+        <!--##########################elastic开始#################################-->
+        <dependency>
+            <groupId>com.tuesdayma</groupId>
+            <artifactId>taobao-sdk-java-auto</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/dingding/taobao-sdk-java-auto_1479188381469-20210303.jar</systemPath>
+        </dependency>
+        <!--##########################elastic结束#################################-->
     </dependencies>
 
     <build>
@@ -84,6 +92,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -2,6 +2,7 @@
 DELETE test_index
 #################创建索引#################
 # 对超过ignore_above的字符串，analyzer不会进行处理
+# number_of_replicas 表示副本数 number_of_shards表示分片数
 PUT test_index
 {
 	"mappings": {
@@ -22,6 +23,10 @@ PUT test_index
 			  "type": "text"
 			}
 		}
+	},
+	"settings": {
+	  "number_of_replicas": 1,
+	  "number_of_shards": 5
 	}
 }
 #################索取索引信息#################
