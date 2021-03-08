@@ -102,7 +102,7 @@
             <artifactId>nacos-discovery-spring-boot-starter</artifactId>
             <version>0.2.4</version>
         </dependency>
-        <!--##########################nacos作为dubbo注册中心开始#################################-->
+        <!--##########################nacos作为dubbo注册中心结束#################################-->
     </dependencies>
 
     <build>
