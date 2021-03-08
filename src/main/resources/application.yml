@@ -12,3 +12,8 @@ spring:
       pool:
         max-active: 1
         min-idle: 1
+nacos:
+  config:
+  # 集群配置 ip:port,ip:port,ip:port
+    server-addr: 192.168.1.123:8848
+    namespace: 43007352-d964-427a-9c25-4dce99b1ea8d
