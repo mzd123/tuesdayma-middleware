@@ -10,6 +10,7 @@
    3. bitmap 的基本操作
    4. redis发布订阅模式
    5. 基于redis+threadPoolExecutor实现延迟队列,redis持久化延迟任务，threadPoolExecutor线程池来调度任务
+
 ## elasticsearch
 版本：elasticsearch 7.4.2(支持集群)
 
@@ -19,6 +20,7 @@
    
 ## nacos
 版本：nacos 1.1.3(支持集群)、nacos-config-spring-boot-starter(0.2.4)
+
 包含内容：
    1. 作为项目配置中心，向nacos服务端拉取配置文件，业务系统可以实时更新，该功能和spring-cloud-config、Apollo差不多
        支持的格式有：properties、json
@@ -27,6 +29,7 @@
  
 ## sharding-jdbc
 版本：sharding-jdbc-spring-boot-starter(4.0.0-RC2),mysql 5.7
+
 包含内容：
    1. 分表分库
  
