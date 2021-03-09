@@ -76,6 +76,8 @@
             <version>${elasticsearch.version}</version>
         </dependency>
         <!--##########################elastic结束#################################-->
+
+
         <!--##########################dingding开始#################################-->
         <dependency>
             <groupId>com.tuesdayma</groupId>
@@ -87,6 +89,7 @@
             </systemPath>
         </dependency>
         <!--##########################dingding结束#################################-->
+
 
         <!--##########################nacos作为配置中心开始#################################-->
         <dependency>
@@ -103,6 +106,38 @@
             <version>0.2.4</version>
         </dependency>
         <!--##########################nacos作为dubbo注册中心结束#################################-->
+
+
+        <!--##########################sharding-jdbc开始#################################-->
+        <!--sharding-jdbc-->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+            <version>4.0.0-RC2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.21</version>
+        </dependency>
+        <!--自送生成-->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.7</version>
+        </dependency>
+        <!--##########################sharding-jdbc结束#################################-->
     </dependencies>
 
     <build>
@@ -113,6 +148,28 @@
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
                 </configuration>
+            </plugin>
+
+            <!--generator maven插件-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <!--配置-->
+                <configuration>
+                    <configurationFile>${basedir}/src/main/resources/mbg-mysql.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <!--允许重新生成覆盖-->
+                    <overwrite>true</overwrite>
+                </configuration>
+                <!--依赖-->
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.11</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -1,0 +1,41 @@
+spring:
+  shardingsphere:
+      datasource:
+        names: mysharding,mysharding0,mysharding1
+        mysharding:
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://127.0.0.1:3306/mysharding?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        mysharding0:
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://127.0.0.1:3306/mysharding_0?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        mysharding1:
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://127.0.0.1:3306/mysharding_1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+      sharding:
+        defaultDataSourceName: mysharding
+        tables:
+            #线下处方通知表
+            my_order:
+                actualDataNodes: mysharding0.my_order_${0..1},mysharding1.my_order_${2..3}
+                databaseStrategy:
+                     standard:
+                       shardingColumn: order_no
+                       preciseAlgorithmClassName: com.tuesdayma.middleware.sharding.config.DB2x2Algorithm
+                tableStrategy:
+                     standard:
+                        shardingColumn: order_no
+                        preciseAlgorithmClassName: com.tuesdayma.middleware.sharding.config.Table2x2Algorithm
+      props:
+         sql:
+          show: true
+mybatis:
+  mapper-locations: classpath*:sqlMapper/*.xml

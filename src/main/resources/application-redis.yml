@@ -1,0 +1,14 @@
+spring:
+  redis:
+    #host: 127.0.0.1
+    host: 192.168.1.37
+    # cluster搭建参考：https://baijiahao.baidu.com/s?id=1634324060462017531&wfr=spider&for=pc
+    # redis-cli --cluster create ip1:port1 ip2:port2 ip3:port3
+    # cluster集群解除：进入src目录，删除nodes-XX.conf和appendonly.aof，不然会报错：
+    #[ERR] Node XXX is not empty. Either the node already knows other nodes (check with CLUSTER NODES) or contains some key in database 0
+#    cluster:
+#      nodes: 192.168.1.128:6380, 192.168.1.128:6381, 192.168.1.128:6382
+    lettuce:
+      pool:
+        max-active: 1
+        min-idle: 1
