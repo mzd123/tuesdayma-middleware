@@ -23,7 +23,6 @@ spring:
       sharding:
         defaultDataSourceName: mysharding
         tables:
-            #线下处方通知表
             my_order:
                 actualDataNodes: mysharding0.my_order_${0..1},mysharding1.my_order_${2..3}
                 databaseStrategy:
