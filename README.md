@@ -24,7 +24,12 @@
        支持的格式有：properties、json
    2. 作为前端的index.html配置页面
    3. 作为dubbo服务的注册中心
-   
+ 
+## sharding-jdbc
+版本：sharding-jdbc-spring-boot-starter(4.0.0-RC2),mysql 5.7
+包含内容：
+   1. 分表分库
+ 
 ## 钉钉群通知
 包含内容：
    1. 向钉钉群发送文本信息、连接、markdown形式的信息
