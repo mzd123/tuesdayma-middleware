@@ -20,6 +20,7 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
+      ## 分表分库
       sharding:
         defaultDataSourceName: mysharding
         tables:

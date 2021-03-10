@@ -47,11 +47,15 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="my_order" domainObjectName="MyOrder">
-            <property name="ignoreQualifiersAtRuntime" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
-        <table tableName="my_order_detail" domainObjectName="MyOrderDetail">
+        <!--<table tableName="my_order" domainObjectName="MyOrder">-->
+            <!--<property name="ignoreQualifiersAtRuntime" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="my_order_detail" domainObjectName="MyOrderDetail">-->
+            <!--<property name="ignoreQualifiersAtRuntime" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="goods" domainObjectName="Goods">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>

@@ -1,3 +1,7 @@
 spring:
   profiles:
-    include: sharding,redis,nacos
+    # redis 为redis的配置文件
+    # nacos 为nacos的配置文件
+    # sharding-sharding 为分表分库配置文件
+    # sharding-masterslave 为读写分离配置文件
+    include: redis,nacos,sharding-sharding

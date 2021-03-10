@@ -1,0 +1,28 @@
+spring:
+  shardingsphere:
+      datasource:
+        names: myshardingread,myshardingwrite
+        myshardingread:
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://127.0.0.1:3306/mysharding_read?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        myshardingwrite:
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://127.0.0.1:3306/mysharding_write?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+      # 独写分离
+      masterslave:
+        master-data-source-name: myshardingwrite
+        slave-data-source-names: myshardingread
+        # round_robin(轮询)，random（随机）
+        load-balance-algorithm-type: round_robin
+        name: datasource
+      props:
+         sql:
+          show: true
+mybatis:
+  mapper-locations: classpath*:sqlMapper/*.xml
