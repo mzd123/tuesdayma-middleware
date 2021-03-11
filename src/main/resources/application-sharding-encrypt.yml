@@ -1,0 +1,32 @@
+spring:
+  shardingsphere:
+      datasource:
+        names: myshardingwrite
+        myshardingwrite:
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://127.0.0.1:3306/mysharding_write?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+      # 自动加解密
+      encrypt:
+        encryptors:
+          encryptor_aes:
+            type: aes
+            props:
+              aes.key.value: E896062C5038DA65
+        tables:
+          goods:
+            columns:
+              goods_name:
+                cipherColumn: goods_name
+                encryptor: encryptor_aes
+      props:
+         sql:
+          show: true
+         query:
+          with:
+            cipher:
+              column: true
+mybatis:
+  mapper-locations: classpath*:sqlMapper/*.xml
