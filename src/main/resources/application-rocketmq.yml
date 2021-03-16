@@ -1,0 +1,5 @@
+rocketmq:
+  name-server: 192.168.1.122:9876;192.168.1.122:9877
+  producer:
+    group: tuesdayma-rocketmq
+   # max-message-size: 1024 * 1024 * 4 默认为 1024 * 1024 * 4

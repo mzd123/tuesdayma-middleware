@@ -5,4 +5,5 @@ spring:
     # sharding-sharding 为分表分库配置文件
     # sharding-masterslave 为读写分离配置文件
     # sharding-encrypt 为对数据库字段自动加解密配置文件
-    include: redis,nacos,sharding-encrypt
+    # rocketmq 为rocketmq的配置文件
+    include: redis,nacos,sharding-encrypt,rocketmq
