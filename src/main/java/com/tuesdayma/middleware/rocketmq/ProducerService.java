@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
  * @Author: mzd
  * @Date: 2021/3/15 13:58
  */
+@Profile(value = "rocketmq")
 @Service
 @Slf4j
 public class ProducerService {

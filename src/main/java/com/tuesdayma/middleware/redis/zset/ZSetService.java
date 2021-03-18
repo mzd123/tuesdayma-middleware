@@ -1,5 +1,6 @@
 package com.tuesdayma.middleware.redis.zset;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -13,6 +14,7 @@ import java.util.Set;
  * @Date: 2021/1/14 15:40
  * remove、intersectAndStore同set
  */
+@Profile(value = "redis")
 @Component
 public class ZSetService {
     @Resource

@@ -1,6 +1,7 @@
 package com.tuesdayma.middleware.redis.list;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: mzd
  * @Date: 2021/1/12 16:05
  */
+@Profile(value = "redis")
 @Slf4j
 @Component
 public class ListService {

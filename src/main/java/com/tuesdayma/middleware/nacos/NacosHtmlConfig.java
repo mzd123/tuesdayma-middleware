@@ -7,6 +7,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import javax.annotation.PostConstruct;
  * @Date: 2021/3/8 16:00
  * 作为服务端的配置中心,给前端动态返回index.html
  */
+@Profile(value = "nacos")
 @Component
 @Data
 @Slf4j

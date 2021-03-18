@@ -1,5 +1,6 @@
 package com.tuesdayma.middleware.redis.set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  * @Author: mzd
  * @Date: 2021/1/13 16:08
  */
+@Profile(value = "redis")
 @Component
 public class SetService {
     @Resource

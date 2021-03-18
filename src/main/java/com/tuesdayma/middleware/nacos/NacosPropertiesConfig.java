@@ -3,6 +3,7 @@ package com.tuesdayma.middleware.nacos;
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import lombok.Data;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2021/3/8 16:00
  * 作为服务端的配置中心,支持properties形式的配置文件
  */
+@Profile(value = "nacos")
 @Component
 @Data
 @NacosPropertySource(dataId = "nacos_test", autoRefreshed = true)

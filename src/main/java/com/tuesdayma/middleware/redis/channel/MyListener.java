@@ -2,6 +2,7 @@ package com.tuesdayma.middleware.redis.channel;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  * @author: mzd
  * @date: 2021-01-17 16:43
  **/
+@Profile(value = "redis")
 @Component
 @Slf4j
 public class MyListener implements MessageListener {

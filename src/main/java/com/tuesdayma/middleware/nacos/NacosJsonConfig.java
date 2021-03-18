@@ -9,6 +9,7 @@ import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.tuesdayma.middleware.nacos.bean.NacosJsonBean;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
  * 作为服务端的配置中心,支持json形式的配置文件
  * 这种形式的配置文件注入，需要注意 项目启动的拉取 和 远程配置更改的时候本地的更新
  */
+@Profile(value = "nacos")
 @Component
 @Data
 @Slf4j

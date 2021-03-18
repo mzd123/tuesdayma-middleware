@@ -1,6 +1,7 @@
 package com.tuesdayma.middleware.nacos;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
  * @Author: mzd
  * @Date: 2021/3/8 16:37
  */
+@Profile(value = "nacos")
 @RestController
 public class NacosController {
     @Resource

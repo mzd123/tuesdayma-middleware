@@ -1,5 +1,6 @@
 package com.tuesdayma.middleware.redis.bitmap;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
  * @Author: mzd
  * @Date: 2021/1/8 11:32
  */
+@Profile(value = "redis")
 @Component
 public class BitMapService {
 

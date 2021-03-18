@@ -2,6 +2,7 @@ package com.tuesdayma.middleware.redis.scan;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.ScanOptions;
@@ -17,6 +18,7 @@ import java.util.Set;
  * @Author: mzd
  * @Date: 2021/1/11 10:40
  */
+@Profile(value = "redis")
 @Component
 @Slf4j
 public class ScanService {

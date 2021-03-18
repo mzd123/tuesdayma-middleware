@@ -1,6 +1,7 @@
 package com.tuesdayma.middleware.redis.channel;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @author: mzd
  * @date: 2021-01-17 16:46
  **/
+@Profile(value = "redis")
 @Component
 public class ChannelConfig {
     /**

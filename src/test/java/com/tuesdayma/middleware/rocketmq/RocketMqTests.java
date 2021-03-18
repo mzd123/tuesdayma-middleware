@@ -40,7 +40,7 @@ public class RocketMqTests {
         MessageBean messageBean = new MessageBean();
         messageBean.setContent("测试消息" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         messageBean.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-        producerService.asyncSend("tuesdayma-rocketmq:sync", messageBean, null, 3);
+        producerService.asyncSend("tuesdayma-rocketmq:async", messageBean, null, 3);
     }
 
     @Test
@@ -48,18 +48,24 @@ public class RocketMqTests {
         MessageBean messageBean = new MessageBean();
         messageBean.setContent("测试消息" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         messageBean.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-        producerService.sendOneWay("tuesdayma-rocketmq:sync", messageBean);
+        producerService.sendOneWay("tuesdayma-rocketmq:sendOneWay", messageBean);
     }
 
     @Test
     public void syncSendOrderly() {
+
+//        MessageBean messageBean = new MessageBean();
+//        messageBean.setContent("测试消息" + "   " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+//        messageBean.setId("1111");
+//        producerService.syncSendOrderly("tuesdayma-rocketmq:sync", messageBean);
+
         for (int i = 0; i < 100; i++) {
             MessageBean messageBean = new MessageBean();
             messageBean.setContent("测试消息" + i + "   " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             messageBean.setId("1111");
-            producerService.syncSend("tuesdayma-rocketmq:sync", messageBean,null,null);
+            producerService.asyncSend("tuesdayma-rocketmq:sync", messageBean,null,null);
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

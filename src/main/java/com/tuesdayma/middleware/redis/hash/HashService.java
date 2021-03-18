@@ -1,6 +1,7 @@
 package com.tuesdayma.middleware.redis.hash;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.Set;
  * @author: mzd
  * @date: 2021-01-17 11:33
  **/
+@Profile(value = "redis")
 @Component
 @Slf4j
 public class HashService {
